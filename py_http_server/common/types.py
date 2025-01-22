@@ -9,9 +9,12 @@ if TYPE_CHECKING:
 from collections import OrderedDict
 from collections.abc import Callable, Mapping, MutableMapping
 from abc import ABC, abstractmethod
+from typing import TypeVar, Generic
+
+V_T = TypeVar("V_T")
 
 
-class CaseInsensitiveDict[V_T](MutableMapping[str, V_T]):
+class CaseInsensitiveDict(Generic[V_T], MutableMapping[str, V_T]):
     """LICENSE NOTICE:
     The CaseInsensitiveDict class is part of the Requests library and is distributed under the Apache License 2.0.
     For licensing details, refer to `requests.LICENSE` and `requests.NOTICE`.

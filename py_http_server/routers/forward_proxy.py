@@ -1,4 +1,5 @@
 import socket
+from typing import Optional
 from urllib.parse import urlparse
 from ..common import RequestHandlerABC, NO_CACHE_HEADERS
 from ..networking import ConnectionInfo
@@ -14,7 +15,7 @@ class ForwardProxyRouter(RequestHandlerABC):
         self,
         stream_threshold: int = 1048576,
         set_proxy_headers: bool = True,
-        allowed_hosts: list[str] | None = None,
+        allowed_hosts: Optional[list[str]] = None,
     ):
         """Inits ForwardProxyRouter.
 

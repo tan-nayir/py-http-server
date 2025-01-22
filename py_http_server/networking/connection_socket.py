@@ -2,6 +2,7 @@ import select
 import socket
 import ssl
 from platform import platform
+from typing import Optional
 from py_http_server.networking.address import TCPAddress
 
 _PLATFORM = platform()
@@ -113,7 +114,7 @@ class ConnectionSocket:
 
     @classmethod
     def wait_any_readable(
-        cls, sockets: set["ConnectionSocket"], timeout: float | None = None
+        cls, sockets: set["ConnectionSocket"], timeout: Optional[float] = None
     ) -> set["ConnectionSocket"]:
         """
         Wait for any of the given sockets to be readable.
