@@ -14,8 +14,9 @@ def app_main(
     https_listeners: list[TCPAddress] = [],
     https_key_file: Optional[str] = None,
     https_cert_file: Optional[str] = None,
+    log_level: str = "DEBUG",
 ):
-    log.init()
+    log.setLevel(log_level)
     try:
         if https_listeners and (not https_key_file or not https_cert_file):
             raise ValueError("Cannot create HTTP listeners without key and cert files")

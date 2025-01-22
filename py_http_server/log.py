@@ -1,7 +1,6 @@
 import logging
 
-CONSOLE_FORMAT = "%(asctime)s %(levelname)s %(name)s %(message)s"
-FILE_FORMAT = "%(asctime)s %(levelname)s %(name)s %(message)s"
+LOG_FORMAT = "%(asctime)s %(levelname)s %(name)s %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
@@ -23,23 +22,28 @@ class ColoredFormatter(logging.Formatter):
     DEFAULT_FORMATTER = logging.Formatter()
 
     def format(self, record):
-        return self.FORMATTERS.get(record.levelno, CONSOLE_FORMAT).format(record)
+        return self.FORMATTERS.get(record.levelno, LOG_FORMAT).format(record)
 
 
 _console_handler = logging.StreamHandler()
 _console_handler.setFormatter(ColoredFormatter())
 _log_level = logging.DEBUG
+_loggers: list[logging.Logger] = []
 
 
 def getLogger(name: str):
     logger = logging.getLogger(name)
     logger.handlers = [_console_handler]
     logger.setLevel(_log_level)
+    _loggers.append(logger)
     return logger
 
 
-def init(log_level=logging.DEBUG):
+def setLevel(log_level: int | str):
+    global _log_level
     _log_level = log_level
+    for logger in _loggers:
+        logger.setLevel(log_level)
 
 
 def shutdown():
